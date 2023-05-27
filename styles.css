@@ -55,4 +55,5 @@ table{
     top: 70%;
     gap: 16px;
     transform: scale(2, 2);
+    visibility: hidden;
 }
