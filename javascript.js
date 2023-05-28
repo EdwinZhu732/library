@@ -5,6 +5,7 @@ let newBook = document.querySelector(".new-book");
 let closeForm = document.querySelector(".close-form");
 let tableBody = document.querySelector("#tbody");
 
+
 function Book(title, author, pages, read){
     this.title = title;
     this.author = author;
@@ -31,11 +32,31 @@ function addBookToLibrary(title, author, pages, read){
     let rowEdit = document.createElement("td");
     let readButton = document.createElement("button");
     readButton.textContent = "Change Read Status";
+    readButton.addEventListener("click", () =>{
+        let i = readButton.parentNode.parentNode.dataset.index;
+        if (myLibrary[i].read == "not-read"){
+            myLibrary[i].read = "read";
+            readButton.parentNode.previousSibling.textContent = "read";
+        }
+        else{
+            myLibrary[i].read = "not-read";
+            readButton.parentNode.previousSibling.textContent = "not-read";
+        }
+    });
     rowEdit.appendChild(readButton);
     newRow.appendChild(rowEdit);
     let rowDelete = document.createElement("td");
     let deleteButton = document.createElement("button");
     deleteButton.textContent = "Delete";
+    deleteButton.addEventListener("click", () => {
+        let i = deleteButton.parentNode.parentNode;
+        while (i.nextSibling != null){
+            i = i.nextSibling;
+            i.dataset.index -= 1;
+        }
+        myLibrary.splice(deleteButton.parentNode.parentNode.dataset.index, 1);
+        deleteButton.parentNode.parentNode.remove();
+    });
     rowDelete.appendChild(deleteButton);
     newRow.appendChild(rowDelete);
     tableBody.appendChild(newRow);
